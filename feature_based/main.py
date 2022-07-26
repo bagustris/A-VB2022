@@ -140,7 +140,7 @@ sep_type = feat_dict[feature_type][0]
 header_type = feat_dict[feature_type][1]
 columns_rm = feat_dict[feature_type][2]
 feat_dimensions = feat_dict[feature_type][3]
-labels = pd.read_csv(f"labels/{label_dict[task][0]}.csv")
+labels = pd.read_csv(f"{args.directory}/labels/{label_dict[task][0]}.csv")
 classes = label_dict[task][1]
 
 if "/" in feature_type:
