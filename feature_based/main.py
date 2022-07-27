@@ -243,7 +243,7 @@ for seed in seed_list:
             identifier = classes.index(j)
             ccc_val = EvalMetrics.CCC(
                 y[1].iloc[:, identifier],
-                val_pred[:, identifier].flatten().detach().numpy(),
+                val_pred[:, identifier].cpu().flatten().detach().numpy(),
             )
             if verbose:
                 print(f"Val CCC \t {j.capitalize()}: \t {ccc_val}", flush=True)

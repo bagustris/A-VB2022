@@ -62,7 +62,7 @@ def train(
             identifier = classes.index(j)
             score = EvalMetrics.CCC(
                 train_y.iloc[:, identifier],
-                train_pred[:, identifier].flatten().detach().numpy(),
+                train_pred[:, identifier].cpu().flatten().detach().numpy(),
             )
     else:
         y_train = torch.max(train_pred, 1)
