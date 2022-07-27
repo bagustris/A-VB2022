@@ -26,7 +26,12 @@ save_path=$1
 
 partitions=("train" "val" "test")
 
-wget https://raw.githubusercontent.com/end2you/end2you/master/docs/cli/main.py
+FILE=./main.py
+if test -f "$FILE"; then
+    echo "$FILE exists."
+else
+    wget https://raw.githubusercontent.com/end2you/end2you/master/docs/cli/main.py
+fi
 
 partitions=("train" "val" "test")
 # Start generating hdf5 data for all partitions
