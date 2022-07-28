@@ -14,7 +14,7 @@ else
     metric=ccc
     if [ "$2" == "high" ]; then
         num_outputs=10
-    elif [ "$2" == "low" ]; then
+    elif [ "$2" == "two" ]; then
         num_outputs=2
     elif [ "$2" == "culture" ]; then
         num_outputs=40
