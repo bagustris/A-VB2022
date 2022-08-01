@@ -24,6 +24,7 @@ from train import validation
 from train import train
 from dataloader import Dataloader
 from utils import EarlyStopping, EvalMetrics, Processing, StorePredictions
+from utils import CCCLoss
 from models import MLPReg, MLPClass
 
 
@@ -63,7 +64,11 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-feat_dict = {"ComParE": [";", "infer", 2, 6373], "eGeMAPS": [";", "infer", 2, 88]}
+feat_dict = {
+    "ComParE": [";", "infer", 2, 6373], 
+    "eGeMAPS": [";", "infer", 2, 88],
+    "w2v2-R-emo-vad": [",", "infer", 1, 1027],
+}
 
 feature_type = args.features
 
@@ -169,8 +174,9 @@ num_epochs = args.epochs
 
 inputs = torch.from_numpy(X[0].astype(np.float32)).to(dev)
 val_inputs = torch.from_numpy(X[1].astype(np.float32)).to(dev)
-seed_list = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
-seed_list = random.sample(seed_list, args.n_seeds)
+# seed_list = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
+seed_list = [109]
+# seed_list = random.sample(seed_list, args.n_seeds)
 
 score_list = []
 timestamp = time.strftime("%d%m%Y-%H%M%S")
@@ -188,9 +194,10 @@ for seed in seed_list:
     torch.manual_seed(seed)
 
     print(
-        f"Task: A-VB {task.capitalize()} | Seed: {seed} | {lr} | {bs} | Max Epochs {num_epochs}"
+        f"===== \nTask: A-VB {task.capitalize()} | Seed: {seed} | lr: {lr} | bs: {bs} | Max Epochs: {num_epochs}"
     )
-    lmse, lclass = nn.MSELoss(), nn.CrossEntropyLoss()
+    # cccl, lclass = CCCLoss(), nn.CrossEntropyLoss()
+    lclass = nn.CrossEntropyLoss()
     loss_res, val_loss_res, val_result, val_loss = [], [], [], 0
 
     for epoch in range(num_epochs):
@@ -201,7 +208,7 @@ for seed in seed_list:
         score, loss = train(
             X[0],
             optimizer,
-            lmse,
+            # cccl,
             lclass,
             model,
             inputs,
@@ -214,7 +221,7 @@ for seed in seed_list:
         )
         loss_res.append(loss.item())
 
-        val_loss = validation(lmse, lclass, model, val_inputs, y[1], classes, task, dev)
+        val_loss = validation(lclass, model, val_inputs, y[1], classes, task, dev)
 
         if task != "type":
             if verbose:

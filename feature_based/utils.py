@@ -20,6 +20,9 @@ class EvalMetrics:
         cov = np.nanmean((y_true - x_mean) * (y_pred - y_mean))
         return round((2 * cov) / (x_var + y_var + (x_mean - y_mean) ** 2), 4)
 
+    def CCCL(y_true, y_pred):
+        return 1 - CCC(y_true, y_pred)
+
     def MAE(y_true, y_pred):
         return mean_absolute_error(y_true, y_pred)
 
@@ -28,6 +31,21 @@ class EvalMetrics:
 
     def UAR(y_true, y_pred):
         return recall_score(y_true, y_pred, average="macro")
+
+    def CCCLoss(x, y):
+        xy = torch.cat((x, y))
+        ccc = 2 * torch.cov(xy) / (x.var() + y.var() + (x.mean() - y.mean())**2)
+        return 1 - ccc
+
+
+class CCCLoss:
+    def __init(self):
+        super(CCCLoss, self).__init__()
+
+    def forward(self, x, y):
+        xy = torch.cat((x, y))
+        ccc = 2*torch.cov(xy) / (x.var() + y.var() + (x.mean() - y.mean())**2)
+        return 1 - ccc
 
 
 class Processing:
@@ -103,16 +121,16 @@ class StorePredictions:
         test_pred = model(torch.from_numpy(X[2].astype(np.float32)).to(dev))
         test_dict_info = {
             "File_ID": list(test_file_ids.values),
-            "Awe": np.array(test_pred[:, 0].detach().numpy()),
-            "Excitement": np.array(test_pred[:, 1].detach().numpy()),
-            "Amusement": np.array(test_pred[:, 2].detach().numpy()),
-            "Awkwardness": np.array(test_pred[:, 3].detach().numpy()),
-            "Fear": np.array(test_pred[:, 4].detach().numpy()),
-            "Horror": np.array(test_pred[:, 5].detach().numpy()),
-            "Distress": np.array(test_pred[:, 6].detach().numpy()),
-            "Triumph": np.array(test_pred[:, 7].detach().numpy()),
-            "Sadness": np.array(test_pred[:, 8].detach().numpy()),
-            "Surprise": np.array(test_pred[:, 9].detach().numpy()),
+            "Awe": np.array(test_pred[:, 0].cpu().detach().numpy()),
+            "Excitement": np.array(test_pred[:, 1].cpu().detach().numpy()),
+            "Amusement": np.array(test_pred[:, 2].cpu().detach().numpy()),
+            "Awkwardness": np.array(test_pred[:, 3].cpu().detach().numpy()),
+            "Fear": np.array(test_pred[:, 4].cpu().detach().numpy()),
+            "Horror": np.array(test_pred[:, 5].cpu().detach().numpy()),
+            "Distress": np.array(test_pred[:, 6].cpu().detach().numpy()),
+            "Triumph": np.array(test_pred[:, 7].cpu().detach().numpy()),
+            "Sadness": np.array(test_pred[:, 8].cpu().detach().numpy()),
+            "Surprise": np.array(test_pred[:, 9].cpu().detach().numpy()),
         }
 
         test_prediction_csv = pd.DataFrame.from_dict(test_dict_info).sort_values(

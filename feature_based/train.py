@@ -15,7 +15,7 @@ from utils import EvalMetrics
 def train(
     train_X,
     optimizer,
-    lmse,
+    # cccl,
     lclass,
     model,
     inputs,
@@ -41,7 +41,7 @@ def train(
                     np.array(train_y.iloc[:, identifier].astype(np.float32))
                 )
                 targets_y = targets[indices].to(dev)
-                loss1 = lmse(train_pred[:, identifier].to(dev), targets_y)
+                loss1 = EvalMetrics.CCCLoss(train_pred[:, identifier].to(dev), targets_y)
                 loss += loss1
         else:
             le = preprocessing.LabelEncoder()
@@ -71,7 +71,7 @@ def train(
     return score, loss
 
 
-def validation(lmse, lclass, model, val_inputs, val_y, classes, task, dev):
+def validation(lclass, model, val_inputs, val_y, classes, task, dev):
 
     inputs_X = val_inputs
     val_pred = model(inputs_X)
@@ -85,7 +85,7 @@ def validation(lmse, lclass, model, val_inputs, val_y, classes, task, dev):
                 np.array(val_y.iloc[:, identifier].astype(np.float32))
             )
             targets_y = targets.to(dev)
-            loss1 = lmse(val_pred[:, identifier].to(dev), targets_y)
+            loss1 = EvalMetrics.CCCLoss(val_pred[:, identifier].to(dev), targets_y)
 
             loss += loss1
     else:

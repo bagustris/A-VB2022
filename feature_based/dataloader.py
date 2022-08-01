@@ -91,8 +91,11 @@ class Dataloader:
                     f"tmp/{store_name}_{part}_filename.csv"
                 )
         for i, val in tqdm(enumerate(X)):
-            X[i] = X[i].rename(columns={"0": "features"})
-            X[i] = X[i]["features"].str.split(",", expand=True).iloc[:, 2:].values
+            if feature_type == 'w2v2-R-emo-vad':
+                X[i] = X[i].values.astype('object')
+            else:
+                X[i] = X[i].rename(columns={"0": "features"})
+                X[i] = X[i]["features"].str.split(",", expand=True).iloc[:, 2:].values
 
         print(f"X: {X[0].shape} | \t y: {y[0].shape}")
         return X, y, stack_filenames[0], stack_filenames[1]

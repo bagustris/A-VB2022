@@ -53,4 +53,5 @@ class MLPReg(nn.Module):
     def forward(self, x):
         main_mlp = self.mlp(x)
         output = torch.sigmoid(self.high_output(main_mlp))
+        # output = torch.tanh(self.high_output(main_mlp))
         return output
