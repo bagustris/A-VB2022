@@ -24,9 +24,10 @@ from train import validation
 from train import train
 from dataloader import Dataloader
 from utils import EarlyStopping, EvalMetrics, Processing, StorePredictions
-from utils import CCCLoss
+# from utils import CCCLoss
 from models import MLPReg, MLPClass
 
+# from end2you.models.model_provider import get_model
 
 warnings.filterwarnings("ignore")
 
@@ -56,8 +57,8 @@ parser.add_argument(
     "--n_seeds",
     type=int,
     default=5,
-    choices=range(1, 6),
-    help="number of seeds to try (default: 5, max: 6).",
+    choices=range(1, 10),
+    help="number of seeds to try (default: 5, max: 10).",
 )
 parser.add_argument(
     "--verbose", action="store_true", help="Degree of verbosity, default low"
@@ -175,8 +176,9 @@ num_epochs = args.epochs
 inputs = torch.from_numpy(X[0].astype(np.float32)).to(dev)
 val_inputs = torch.from_numpy(X[1].astype(np.float32)).to(dev)
 # seed_list = [101, 102, 103, 104, 105, 106, 107, 108, 109, 110]
-seed_list = [109]
-# seed_list = random.sample(seed_list, args.n_seeds)
+seed_list = [105, 106, 107, 108, 109]
+# seed_list = [109]
+seed_list = random.sample(seed_list, args.n_seeds)
 
 score_list = []
 timestamp = time.strftime("%d%m%Y-%H%M%S")
@@ -190,13 +192,13 @@ for seed in seed_list:
         model = MLPClass(feat_dimensions, len(classes)).to(dev)
 
     es = EarlyStopping(patience=args.patience, verbose=False, delta=0.01)
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=0.0001)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=0.01)
     torch.manual_seed(seed)
 
     print(
         f"===== \nTask: A-VB {task.capitalize()} | Seed: {seed} | lr: {lr} | bs: {bs} | Max Epochs: {num_epochs}"
     )
-    # cccl, lclass = CCCLoss(), nn.CrossEntropyLoss()
+    lmse, lclass = nn.MSELoss(), nn.CrossEntropyLoss()
     lclass = nn.CrossEntropyLoss()
     loss_res, val_loss_res, val_result, val_loss = [], [], [], 0
 
@@ -208,7 +210,7 @@ for seed in seed_list:
         score, loss = train(
             X[0],
             optimizer,
-            # cccl,
+            lmse,
             lclass,
             model,
             inputs,
@@ -221,21 +223,21 @@ for seed in seed_list:
         )
         loss_res.append(loss.item())
 
-        val_loss = validation(lclass, model, val_inputs, y[1], classes, task, dev)
+        val_loss = validation(lmse, lclass, model, val_inputs, y[1], classes, task, dev)
 
         if task != "type":
             if verbose:
                 print(
-                    f"{epoch+1}/{num_epochs}\tEmoCCC: {np.round(np.mean(score),3)}\tTrainLoss: {np.round(loss.item(),3)} \tValLoss: {np.round(val_loss.item(),3)}"
+                    f"{epoch+1}/{num_epochs}\tEmoCCC: {np.round(np.mean(score),3)}\tTrainLoss: {np.round(loss.item(),3)} \tValLoss: {np.round(val_loss, 3)}"
                 )
         else:
             if verbose:
                 print(
-                    f"{epoch+1}/{num_epochs}\tUAR: {np.round(np.mean(score),3)}\tTrainLoss: {np.round(loss.item(),3)} \tValLoss: {np.round(val_loss.item(),3)}"
+                    f"{epoch+1}/{num_epochs}\tUAR: {np.round(np.mean(score),3)}\tTrainLoss: {np.round(loss.item(),3)} \tValLoss: {np.round(val_loss, 3)}"
                 )
 
-        val_loss_res.append(val_loss.item())
-        es(val_loss.item(), model)
+        val_loss_res.append(val_loss)
+        es(val_loss, model)
         if es.early_stop:
             print(f"Early stopping at epoch {epoch}")
             break
