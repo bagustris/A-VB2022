@@ -7,20 +7,20 @@ Full details and results can be found in the latest release of the [A-VB White P
 
 **The High-Dimensional Emotion Task (A-VB High)**
 
-The A-VB High track explores a high-dimensional emotion space for understanding vocal bursts. Participants will be challenged with predicting the intensity of 10 emotions (Awe, Excitement, Amusement, Awkwardness, Fear, Horror, Distress, Triumph, Sadness, and Surprise) associated with each vocal burst as a multi-output regression task. Participants will report the average Concordance Correlation Coefficient (CCC) across all 10 emotions. The baseline for this task is set by our end-to-end approach as **0.5686 CCC**
+The A-VB High track explores a high-dimensional emotion space for understanding vocal bursts. Participants will be challenged with predicting the intensity of 10 emotions (Awe, Excitement, Amusement, Awkwardness, Fear, Horror, Distress, Triumph, Sadness, and Surprise) associated with each vocal burst as a multi-output regression task. Participants will report the average Concordance Correlation Coefficient (CCC) across all 10 emotions. The baseline for this task is set by our end-to-end approach as **0.5686 CCC**.
 
 
 **The Two-Dimensional Emotion Task (A-VB Two)** 
 
-In the A-VB Two track, we investigate a low-dimensional emotion space that is based on the circumplex model of affect. Participants will predict values of arousal and valence (on a scale from 1=unpleasant/subdued, 5=neutral, 9=pleasant/stimulated) as a regression task. Participants will report the average Concordance Correlation Coefficient (CCC), as well as the Pearson correlation coefficient, across the two dimensions. The baseline for this task is set by our end-to-end approach as **0.5084 CCC**
+In the A-VB Two track, we investigate a low-dimensional emotion space that is based on the circumplex model of affect. Participants will predict values of arousal and valence (on a scale from 1=unpleasant/subdued, 5=neutral, 9=pleasant/stimulated) as a regression task. Participants will report the average Concordance Correlation Coefficient (CCC), as well as the Pearson correlation coefficient, across the two dimensions. The baseline for this task is set by our end-to-end approach as **0.5084 CCC**.
 
 **The Cross-Cultural Emotion Task (A-VB Culture)** 
 
-In the A-VB Culture track, participants will be challenged with predicting the intensity of 10 emotions associated with each vocal burst as a multi-output regression task, using a model or multiple models that generate predictions specific to each of the four cultures (the U.S., China, Venezuela, or South Africa). Specifically, annotations of each vocal burst will consist of culture-specific ground truth, meaning that the ground truth for each sample will be the average of annotations solely from the country of origin of the sample. Participants will report the average Concordance Correlation Coefficient (CCC), as well as the Pearson correlation coefficient, across all 10 emotions. The baseline for this task is set by our end-to-end approach as **0.4401 CCC**
+In the A-VB Culture track, participants will be challenged with predicting the intensity of 10 emotions associated with each vocal burst as a multi-output regression task, using a model or multiple models that generate predictions specific to each of the four cultures (the U.S., China, Venezuela, or South Africa). Specifically, annotations of each vocal burst will consist of culture-specific ground truth, meaning that the ground truth for each sample will be the average of annotations solely from the country of origin of the sample. Participants will report the average Concordance Correlation Coefficient (CCC), as well as the Pearson correlation coefficient, across all 10 emotions. The baseline for this task is set by our end-to-end approach as **0.4401 CCC**.
 
 **The Expressive Burst-Type Task (A-VB Type)**
 
-In the A-VB Type task, participants will be challenged with classifying the type of expressive vocal burst from 8 classes (Gasp, Laugh, Cry, Scream, Grunt, Groan, Pant, Other).  The baseline for this task is set by our end-to-end approach as **0.4172 UAR**
+In the A-VB Type task, participants will be challenged with classifying the type of expressive vocal burst from 8 classes (Gasp, Laugh, Cry, Scream, Grunt, Groan, Pant, Other).  The baseline for this task is set by our end-to-end approach as **0.4172 UAR**.
 
 
 
