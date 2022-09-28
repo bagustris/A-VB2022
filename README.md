@@ -56,9 +56,5 @@ File_ID,Voc_Type
 [10119],Gasp
 ```
 
-More information on competition guidelines can be found at [competitions.hume.ai](https://competitions.hume.ai).
-
-Any questions: [competitions@hume.ai](mailto:competitions@hume.ai)
-
-&copy; 2022 **Creative Commons Attribution-Non Commercial-No Derivatives 4.0 International Licence (CC BY-NC-ND)**
-
+## Citation
+> B. T. Atmaja and A. Sasou, “Leveraging Pre-Trained Acoustic Feature Extractor For Affective Vocal Bursts Tasks,” in APSIPA Annual Summit and Conference, 2022.
