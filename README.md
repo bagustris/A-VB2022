@@ -1,7 +1,9 @@
 
 # ACII A-VB 2022 Workshop & Competition
 
-Code for the three tracks of A-VB 2022 competition (Team EP-ITS); our contribution is listed in `feature_based` directory. 
+Forked from https://github.com/HumeAI/competitions/tree/main/A-VB2022.
+
+Code for the four tasks of A-VB 2022 competition (Team EP-ITS); our contribution is listed in `feature_based` directory. 
 
 Full details and results can be found in the latest release of the [A-VB Paper](http://www.apsipa.org/proceedings/2022/APSIPA%202022/ThAM1-3/1570839332.pdf).
 
@@ -20,8 +22,8 @@ In the A-VB Culture track, participants will be challenged with predicting the i
 
 **The Expressive Burst-Type Task (A-VB Type)**
 
-In the A-VB Type task, participants will be challenged with classifying the type of expressive vocal burst from 8 classes (Gasp, Laugh, Cry, Scream, Grunt, Groan, Pant, Other).  The score for this task is set by our team is**0.4791 UAR**.
+In the A-VB Type task, participants will be challenged with classifying the type of expressive vocal burst from 8 classes (Gasp, Laugh, Cry, Scream, Grunt, Groan, Pant, Other).  The score for this task is set by our team is **0.4791 UAR**.
 
 
 ## Citation
-> B. T. Atmaja and A. Sasou, “Leveraging Pre-Trained Acoustic Feature Extractor For Affective Vocal Bursts Tasks,” in APSIPA Annual Summit and Conference, 2022.
+> B. T. Atmaja and A. Sasou, “Leveraging Pre-Trained Acoustic Feature Extractor For Affective Vocal Bursts Tasks,” in 2022 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC), Nov. 2022, pp. 1412–1417, doi: 10.23919/APSIPAASC55919.2022.9980083.
